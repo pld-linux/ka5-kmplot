@@ -1,0 +1,83 @@
+%define		kdeappsver	18.12.0
+%define		qtver		5.9.0
+%define		kaname		kmplot
+Summary:	kmplot
+Name:		ka5-%{kaname}
+Version:	18.12.0
+Release:	1
+License:	GPL v2+/LGPL v2.1+
+Group:		X11/Applications
+Source0:	http://download.kde.org/stable/applications/%{kdeappsver}/src/%{kaname}-%{version}.tar.xz
+# Source0-md5:	ce96672543dc21c36ed8d30cebe537f7
+URL:		http://www.kde.org/
+BuildRequires:	Qt5Core-devel >= %{qtver}
+BuildRequires:	Qt5Gui-devel
+BuildRequires:	Qt5PrintSupport-devel
+BuildRequires:	Qt5Svg-devel
+BuildRequires:	Qt5Widgets-devel
+BuildRequires:	gettext-devel
+BuildRequires:	kf5-extra-cmake-modules >= 5.53.0
+BuildRequires:	kf5-kcrash-devel
+BuildRequires:	kf5-kdbusaddons-devel
+BuildRequires:	kf5-kdoctools-devel
+BuildRequires:	kf5-kguiaddons-devel
+BuildRequires:	kf5-ki18n-devel
+BuildRequires:	kf5-kparts-devel
+BuildRequires:	kf5-kwidgetsaddons-devel
+BuildRequires:	qt5-build >= %{qtver}
+BuildRequires:	rpmbuild(macros) >= 1.164
+BuildRequires:	shared-mime-info
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%description
+KmPlot is a program to draw graphs, their integrals or derivatives. It
+supports different systems of coordinates like the Cartesian or the
+polar coordinate system. The graphs can be colorized and the view is
+scalable, so that you are able to zoom to the level you need.
+
+%prep
+%setup -q -n %{kaname}-%{version}
+
+%build
+install -d build
+cd build
+%cmake \
+	-DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
+	..
+%{__make}
+
+%install
+rm -rf $RPM_BUILD_ROOT
+%{__make} -C build install \
+	DESTDIR=$RPM_BUILD_ROOT
+
+%find_lang %{kaname} --all-name --with-qm
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files -f %{kaname}.lang
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/kmplot
+%{_libdir}/qt5/plugins/kmplotpart.so
+%{_desktopdir}/org.kde.kmplot.desktop
+%{_datadir}/config.kcfg/kmplot.kcfg
+%{_datadir}/dbus-1/interfaces/org.kde.kmplot.KmPlot.xml
+%{_datadir}/dbus-1/interfaces/org.kde.kmplot.MainDlg.xml
+%{_datadir}/dbus-1/interfaces/org.kde.kmplot.Parser.xml
+%{_datadir}/dbus-1/interfaces/org.kde.kmplot.View.xml
+%{_iconsdir}/hicolor/128x128/apps/kmplot.png
+%{_iconsdir}/hicolor/16x16/apps/kmplot.png
+%{_iconsdir}/hicolor/22x22/apps/kmplot.png
+%{_iconsdir}/hicolor/32x32/apps/kmplot.png
+%{_iconsdir}/hicolor/48x48/apps/kmplot.png
+%{_iconsdir}/hicolor/64x64/apps/kmplot.png
+%{_iconsdir}/hicolor/scalable/apps/kmplot.svgz
+%{_datadir}/kservices5/kmplot_part.desktop
+%dir %{_datadir}/kxmlgui5/kmplot
+%{_datadir}/kxmlgui5/kmplot/kmplot_part.rc
+%{_datadir}/kxmlgui5/kmplot/kmplot_part_readonly.rc
+%{_datadir}/kxmlgui5/kmplot/kmplot_shell.rc
+%{_datadir}/metainfo/org.kde.kmplot.appdata.xml
