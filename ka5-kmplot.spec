@@ -1,14 +1,15 @@
-%define		kdeappsver	18.12.1
+%define		kdeappsver	19.04.1
+%define		kframever	5.56.0
 %define		qtver		5.9.0
 %define		kaname		kmplot
 Summary:	kmplot
 Name:		ka5-%{kaname}
-Version:	18.12.1
+Version:	19.04.1
 Release:	1
 License:	GPL v2+/LGPL v2.1+
 Group:		X11/Applications
 Source0:	http://download.kde.org/stable/applications/%{kdeappsver}/src/%{kaname}-%{version}.tar.xz
-# Source0-md5:	a5a7fdd5be085ecf5ab8a29179bdf3ba
+# Source0-md5:	00a674b21515cac60a202917eaea3639
 URL:		http://www.kde.org/
 BuildRequires:	Qt5Core-devel >= %{qtver}
 BuildRequires:	Qt5Gui-devel
@@ -16,14 +17,14 @@ BuildRequires:	Qt5PrintSupport-devel
 BuildRequires:	Qt5Svg-devel
 BuildRequires:	Qt5Widgets-devel
 BuildRequires:	gettext-devel
-BuildRequires:	kf5-extra-cmake-modules >= 5.53.0
-BuildRequires:	kf5-kcrash-devel
-BuildRequires:	kf5-kdbusaddons-devel
-BuildRequires:	kf5-kdoctools-devel
-BuildRequires:	kf5-kguiaddons-devel
-BuildRequires:	kf5-ki18n-devel
-BuildRequires:	kf5-kparts-devel
-BuildRequires:	kf5-kwidgetsaddons-devel
+BuildRequires:	kf5-extra-cmake-modules >= %{kframever}
+BuildRequires:	kf5-kcrash-devel >= %{kframever}
+BuildRequires:	kf5-kdbusaddons-devel >= %{kframever}
+BuildRequires:	kf5-kdoctools-devel >= %{kframever}
+BuildRequires:	kf5-kguiaddons-devel >= %{kframever}
+BuildRequires:	kf5-ki18n-devel >= %{kframever}
+BuildRequires:	kf5-kparts-devel >= %{kframever}
+BuildRequires:	kf5-kwidgetsaddons-devel >= %{kframever}
 BuildRequires:	ninja
 BuildRequires:	qt5-build >= %{qtver}
 BuildRequires:	rpmbuild(macros) >= 1.164
@@ -46,6 +47,7 @@ install -d build
 cd build
 %cmake \
 	-G Ninja \
+	-DHTML_INSTALL_DIR=%{_kdedocdir} \
 	-DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
 	..
 %ninja_build
@@ -54,7 +56,7 @@ cd build
 rm -rf $RPM_BUILD_ROOT
 %ninja_install -C build
 
-%find_lang %{kaname} --all-name --with-qm
+%find_lang %{kaname} --all-name --with-kde
 
 %clean
 rm -rf $RPM_BUILD_ROOT
