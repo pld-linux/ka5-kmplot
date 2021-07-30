@@ -39,6 +39,12 @@ supports different systems of coordinates like the Cartesian or the
 polar coordinate system. The graphs can be colorized and the view is
 scalable, so that you are able to zoom to the level you need.
 
+%description -l pl.UTF-8
+KmPlot jest programem rysującym wykresy funkcji, całek i pochodnych.
+Obsługuje różne układy współrzędnych, np. Kartezjański czy biegunowy.
+Wykresy są kolorowane i skalowalne, tak że jesteś w stanie powiększyć
+je do poziomu, którego potrzebujesz.
+
 %prep
 %setup -q -n %{kaname}-%{version}
 
