@@ -1,15 +1,15 @@
-%define		kdeappsver	21.04.3
+%define		kdeappsver	21.08.0
 %define		kframever	5.56.0
 %define		qtver		5.9.0
 %define		kaname		kmplot
 Summary:	kmplot
 Name:		ka5-%{kaname}
-Version:	21.04.3
+Version:	21.08.0
 Release:	1
 License:	GPL v2+/LGPL v2.1+
 Group:		X11/Applications
 Source0:	http://download.kde.org/stable/release-service/%{kdeappsver}/src/%{kaname}-%{version}.tar.xz
-# Source0-md5:	07fb16e33a2cfb87f6cb3e16c3fe3f2d
+# Source0-md5:	56d769330d50cf81503f6168f7824205
 URL:		http://www.kde.org/
 BuildRequires:	Qt5Core-devel >= %{qtver}
 BuildRequires:	Qt5Gui-devel
@@ -70,7 +70,7 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{kaname}.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kmplot
-%{_libdir}/qt5/plugins/kmplotpart.so
+%{_libdir}/qt5/plugins/kf5/parts/kmplotpart.so
 %{_desktopdir}/org.kde.kmplot.desktop
 %{_datadir}/config.kcfg/kmplot.kcfg
 %{_datadir}/dbus-1/interfaces/org.kde.kmplot.KmPlot.xml
