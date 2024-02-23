@@ -1,35 +1,35 @@
 #
 # Conditional build:
 %bcond_with	tests		# build with tests
-%define		kdeappsver	23.08.4
+%define		kdeappsver	24.01.95
 %define		kframever	5.94.0
 %define		qtver		5.15.2
 %define		kaname		kmplot
 Summary:	kmplot
 Name:		ka5-%{kaname}
-Version:	23.08.4
-Release:	1
+Version:	24.01.95
+Release:	0.1
 License:	GPL v2+/LGPL v2.1+
 Group:		X11/Applications
-Source0:	https://download.kde.org/stable/release-service/%{kdeappsver}/src/%{kaname}-%{version}.tar.xz
-# Source0-md5:	0287e2ee1af84ae11f4a80f6be554dec
+Source0:	https://download.kde.org/unstable/release-service/%{kdeappsver}/src/%{kaname}-%{version}.tar.xz
+# Source0-md5:	ceda36d49577ff9b220d0e585bd336d9
 URL:		http://www.kde.org/
-BuildRequires:	Qt5Core-devel >= %{qtver}
-BuildRequires:	Qt5Gui-devel
-BuildRequires:	Qt5PrintSupport-devel
-BuildRequires:	Qt5Svg-devel
-BuildRequires:	Qt5Widgets-devel
+BuildRequires:	Qt6Core-devel >= %{qtver}
+BuildRequires:	Qt6Gui-devel
+BuildRequires:	Qt6PrintSupport-devel
+BuildRequires:	Qt6Svg-devel
+BuildRequires:	Qt6Widgets-devel
 BuildRequires:	gettext-devel
-BuildRequires:	kf5-extra-cmake-modules >= %{kframever}
-BuildRequires:	kf5-kcrash-devel >= %{kframever}
-BuildRequires:	kf5-kdbusaddons-devel >= %{kframever}
-BuildRequires:	kf5-kdoctools-devel >= %{kframever}
-BuildRequires:	kf5-kguiaddons-devel >= %{kframever}
-BuildRequires:	kf5-ki18n-devel >= %{kframever}
-BuildRequires:	kf5-kparts-devel >= %{kframever}
-BuildRequires:	kf5-kwidgetsaddons-devel >= %{kframever}
+BuildRequires:	kf6-extra-cmake-modules >= %{kframever}
+BuildRequires:	kf6-kcrash-devel >= %{kframever}
+BuildRequires:	kf6-kdbusaddons-devel >= %{kframever}
+BuildRequires:	kf6-kdoctools-devel >= %{kframever}
+BuildRequires:	kf6-kguiaddons-devel >= %{kframever}
+BuildRequires:	kf6-ki18n-devel >= %{kframever}
+BuildRequires:	kf6-kparts-devel >= %{kframever}
+BuildRequires:	kf6-kwidgetsaddons-devel >= %{kframever}
 BuildRequires:	ninja
-BuildRequires:	qt5-build >= %{qtver}
+BuildRequires:	qt6-build >= %{qtver}
 BuildRequires:	rpmbuild(macros) >= 1.164
 BuildRequires:	shared-mime-info
 BuildRequires:	tar >= 1:1.22
@@ -57,7 +57,8 @@ je do poziomu, którego potrzebujesz.
 	-G Ninja \
 	%{!?with_tests:-DBUILD_TESTING=OFF} \
 	-DHTML_INSTALL_DIR=%{_kdedocdir} \
-	-DKDE_INSTALL_USE_QT_SYS_PATHS=ON
+	-DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
+	-DQT_MAJOR_VERSION=6
 %ninja_build -C build
 
 %if %{with tests}
@@ -77,25 +78,15 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{kaname}.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kmplot
-%{_libdir}/qt5/plugins/kf5/parts/kmplotpart.so
+%{_libdir}/qt6/plugins/kf6/parts/kmplotpart.so
 %{_desktopdir}/org.kde.kmplot.desktop
 %{_datadir}/config.kcfg/kmplot.kcfg
 %{_datadir}/dbus-1/interfaces/org.kde.kmplot.KmPlot.xml
 %{_datadir}/dbus-1/interfaces/org.kde.kmplot.MainDlg.xml
 %{_datadir}/dbus-1/interfaces/org.kde.kmplot.Parser.xml
 %{_datadir}/dbus-1/interfaces/org.kde.kmplot.View.xml
-%{_iconsdir}/hicolor/128x128/apps/kmplot.png
-%{_iconsdir}/hicolor/16x16/apps/kmplot.png
-%{_iconsdir}/hicolor/22x22/apps/kmplot.png
-%{_iconsdir}/hicolor/32x32/apps/kmplot.png
-%{_iconsdir}/hicolor/48x48/apps/kmplot.png
-%{_iconsdir}/hicolor/64x64/apps/kmplot.png
+%{_iconsdir}/hicolor/*x*/apps/kmplot.png
 %{_iconsdir}/hicolor/scalable/apps/kmplot.svgz
-%{_datadir}/kservices5/kmplot_part.desktop
-%dir %{_datadir}/kxmlgui5/kmplot
-%{_datadir}/kxmlgui5/kmplot/kmplot_part.rc
-%{_datadir}/kxmlgui5/kmplot/kmplot_part_readonly.rc
-%{_datadir}/kxmlgui5/kmplot/kmplot_shell.rc
 %{_datadir}/metainfo/org.kde.kmplot.appdata.xml
 %lang(ca) %{_mandir}/ca/man1/kmplot.1*
 %lang(de) %{_mandir}/de/man1/kmplot.1*
